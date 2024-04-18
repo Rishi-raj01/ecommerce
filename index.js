@@ -2,11 +2,11 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const authrouter = require("./router/authrouter.js");
-const categoryRouter=require("./router/categoryRouter.js")
+const categoryRouter = require("./router/categoryRouter.js");
 const productrouter = require("./router/productRoute.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const path=require("path")
+const path = require("path");
 const PORT = process.env.PORT || 5000;
 
 // Load environment variables
@@ -22,12 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname,"./client/build")))
-//app.use(cors());
-// app.use(cors({
-//   origin: "*",
-//   credentials: true
-// }));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 // CORS middleware
 app.use((req, res, next) => {
@@ -36,16 +31,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
-// app.get("/", (req, res) => {
-//   res.send("<h1>Welcome to ecommerce app</h1>");
-// });
-app.use("*",function(req,res){
- res.sendFile(path.join(__dirname,"./client/build/index.html"))
-})
 app.use("/user", authrouter);
-app.use("/category",categoryRouter)
-app.use("/product",productrouter)
+app.use("/category", categoryRouter);
+app.use("/product", productrouter);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
