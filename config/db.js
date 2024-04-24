@@ -9,8 +9,8 @@ async function connectToDatabase() {
     console.log(`db connected`);
 
     // Fetch data using your Mongoose model
-    const fetched_data = await usermodel.find({});
-    console.log(fetched_data);
+  //  const fetched_data = await usermodel.find({});
+    //console.log(fetched_data);
   } catch (err) {
     console.log("....", err);
   }
