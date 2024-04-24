@@ -29,7 +29,13 @@ app.use(cors({
   origin: "*",
   credentials: true
 }));
-
+// Handle preflight requests
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  res.header("Access-Control-Allow-Private-Network", "true"); // Set the required header
+  res.send(200);
+});
 app.use("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
